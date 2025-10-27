@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Delegation Example</title></head>
+<body>
+    <h3>Adding Events Dynamically in JavaScript</h3>
+    <hr/>
+
+    <fieldset>
+        <legend>Tasks in my Hand</legend>
+    <ul id="list1" style="border:2px solid blue; padding : 30px;">
+      <li>Send E-mail <a href="#" class="delete" style="margin-left:10px;color:red;text-decoration:none">Delete</a></li>
+      <li>Do Shopping <a href="#" class="delete" style="margin-left:10px;color:red;text-decoration:none">Delete</a></li>
+    </ul>
+
+    </fieldset>
+  <br/>
+  <input  id="t1" placeholder="New Task Info.." type="text"  required/>
+  <button id="addButton">Add Task</button>
+
+  <script>
+
+    const listObj = document.getElementById("list1");
+    const btnObj = document.getElementById("addButton"); 
+    
+    listObj.addEventListener("click", function(event)
+    {
+        // If the clicked element is the delete link, remove its parent <li>
+        if (event.target && event.target.matches && event.target.matches('a.delete')) {
+            event.preventDefault();
+            var li = event.target.closest('li');
+            if (li) {
+                li.parentNode.removeChild(li);
+            }
+            return;
+        }
+
+        // Otherwise, if an <li> was clicked, toggle its strike-through
+        if (event.target && event.target.tagName == "LI") {
+          if (event.target.style.textDecoration == "line-through") {
+             event.target.style.textDecoration = "none";
+          } else {
+            event.target.style.textDecoration = "line-through";
+          }
+        }
+    });
+
+  btnObj.addEventListener("click", function(event)
+  {
+     var textObj = document.getElementById("t1");
+     if (textObj.value.trim() === "") {
+       alert("Please enter a task!");
+       return;
+     }
+
+     var listItemObj = document.createElement("LI");
+     // Create a text node for the task text so we can append the delete link after it
+     listItemObj.appendChild(document.createTextNode(textObj.value));
+
+     // Create delete link and append to the <li>
+     var delLink = document.createElement('a');
+     delLink.href = '#';
+     delLink.className = 'delete';
+     delLink.style.marginLeft = '10px';
+     delLink.style.color = 'red';
+     delLink.style.textDecoration = 'none';
+     delLink.innerText = 'Delete';
+     listItemObj.appendChild(delLink);
+
+     listObj.appendChild(listItemObj);
+     textObj.value = "";
+  });
+  </script>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------------------------------------
+---Assignment 2---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Table - Apply Styles</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 60%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    button {
+      display: block;
+      margin: 15px auto;
+      padding: 8px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Employee Details</h2>
+  
+  <table id="empTable">
+    <tr><th>ID</th><th>Name</th><th>Department</th></tr>
+    <tr><td>101</td><td>John</td><td>HR</td></tr>
+    <tr><td>102</td><td>Priya</td><td>Finance</td></tr>
+    <tr><td>103</td><td>Amit</td><td>IT</td></tr>
+    <tr><td>104</td><td>Sneha</td><td>Sales</td></tr>
+  </table>
+
+  <button id="styleBtn">Apply Styles</button>
+
+  <script>
+    document.getElementById("styleBtn").addEventListener("click", function() {
+      const rows = document.getElementById("empTable").getElementsByTagName("tr");
+      for (let i = 1; i < rows.length; i++) { // skip header row
+        if (i % 2 === 0)
+          rows[i].style.backgroundColor = "#f2f2f2";
+        else
+          rows[i].style.backgroundColor = "#d9ead3";
+      }
+    });
+  </script>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------------------------------------
+---Assignment 3----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Products Dynamically</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .input-group {
+      margin: 10px auto;
+      max-width: 500px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+      display: none;
+      margin: 5px 0;
+    }
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .product {
+      border: 1px solid #999;
+      border-radius: 8px;
+      padding: 10px;
+      width: 200px;
+      margin: 10px;
+      text-align: center;
+      box-shadow: 2px 2px 5px gray;
+    }
+    .product img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Add Products at Runtime</h2>
+  
+  <div class="input-group">
+    <input type="url" id="imageUrl" placeholder="Enter image URL..." required>
+    <div id="urlError" class="error">Please enter a valid image URL</div>
+    
+    <input type="text" id="productDesc" placeholder="Enter product description..." required>
+    <div id="descError" class="error">Please enter a product description</div>
+  </div>
+  
+  <button id="addBtn">Add Product</button>
+  
+  <section id="productSection"></section>
+
+  <script>
+    let count = 1;
+    document.getElementById("addBtn").addEventListener("click", function() {
+      // Get input values
+      const imageUrl = document.getElementById("imageUrl").value.trim();
+      const productDesc = document.getElementById("productDesc").value.trim();
+      
+      // Reset error messages
+      document.getElementById("urlError").style.display = "none";
+      document.getElementById("descError").style.display = "none";
+      
+      // Validate inputs
+      let hasError = false;
+      if (!imageUrl) {
+        document.getElementById("urlError").style.display = "block";
+        hasError = true;
+      }
+      if (!productDesc) {
+        document.getElementById("descError").style.display = "block";
+        hasError = true;
+      }
+      
+      if (hasError) return;
+      
+      const section = document.getElementById("productSection");
+
+      // Create product div
+      const productDiv = document.createElement("div");
+      productDiv.className = "product";
+
+      // Create image using provided URL
+      const img = document.createElement("img");
+      img.src = imageUrl;
+      img.alt = "Product Image " + count;
+      
+      // Add error handling for image loading
+      img.onerror = function() {
+        alert("Failed to load image. Please check the URL.");
+        productDiv.remove();
+      };
+
+      // Create span for name
+      const nameSpan = document.createElement("span");
+      nameSpan.textContent = "Product " + count;
+      nameSpan.style.display = "block";
+      nameSpan.style.fontWeight = "bold";
+      nameSpan.style.margin = "5px 0";
+
+      // Create description
+      const desc = document.createElement("p");
+      desc.textContent = productDesc;
+
+      // Append all to product div
+      productDiv.appendChild(img);
+      productDiv.appendChild(nameSpan);
+      productDiv.appendChild(desc);
+
+      // Add product to section
+      section.appendChild(productDiv);
+
+      count++;
+      
+      // Clear inputs
+      document.getElementById("imageUrl").value = "";
+      document.getElementById("productDesc").value = "";
+    });
+  </script>
+</body>
+</html>
