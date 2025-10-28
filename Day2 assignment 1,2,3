@@ -1,0 +1,94 @@
+Assignment 2
+-----------------------------------------------------------------------------------------------------------------------------------------------------  
+ a. What are Keys in React? How to Use Them
+Definition:
+Keys are unique identifiers used by React to keep track of elements in a list.
+They help React identify which items have changed, been added, or removed — improving rendering efficiency.
+
+Why they’re needed:
+When rendering lists (like using `map()`), React needs a way to uniquely identify each element so it can efficiently update only the changed items instead of re-rendering the whole list.
+Example:
+
+Fruits.jsx
+  
+function FruitsList() {
+  const fruits = ["Apple", "Banana", "Mango"];
+  return (
+    <ul>
+      {fruits.map((fruit, index) => (
+        <li key={index}>{fruit}</li>   {/* key used here */}
+      ))}
+    </ul>
+  );
+}
+
+Best Practice:
+
+* Use unique IDs (not indexes) as keys whenever possible.
+* Example: `<li key={fruit.id}>`
+
+b. Study about Virtual DOM
+
+Definition:
+The Virtual DOM (VDOM) is a lightweight in-memory representation (a virtual copy) of the Real (Physical) DOM.
+
+How it works:
+
+1. When a React component’s state or props change, a new Virtual DOM is created.
+2. React compares this new Virtual DOM with the previous one (a process called diffing).
+3. Only the changed parts are updated in the actual DOM — not the whole page.
+4. This makes React apps faster and more efficient.
+
+> React uses the Virtual DOM to minimize costly operations on the real DOM.
+
+
+c. Physical DOM vs Virtual DOM
+
+| Feature          | Physical (Real) DOM                 | Virtual DOM                                  |
+| ---------------- | ----------------------------------- | -------------------------------------------- |
+| Definition       | Actual DOM structure in the browser | In-memory virtual copy of the DOM            |
+|  Update Speed    | Slow (whole DOM re-renders)         | Fast (only changed nodes updated)            |
+| Performance      | Less efficient                      | Highly efficient                             |
+| Manipulation     | Directly changes the UI             | Changes reflected after comparison (diffing) |
+| Example          | `document.getElementById()`         | React handles it internally                  |
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Assignment3
+How to Create Class Components in React
+
+Definition:
+A Class Component is a React component defined using ES6 class syntax.
+It can hold state and use lifecycle methods (like `componentDidMount()`).
+
+Basic Syntax:
+
+```jsx
+import React, { Component } from 'react';
+
+class HelloWorld extends Component {
+  render() {
+    return (
+      <h1>Hello, World!</h1>
+    );
+  }
+}
+
+export default HelloWorld;
+
+
+To use it in your app:
+```jsx
+import React from 'react';
+import HelloWorld from './HelloWorld';
+
+function App() {
+  return (
+    <div>
+      <HelloWorld />
+    </div>
+  );
+}
+
+export default App;
+
+
+
