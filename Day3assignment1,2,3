@@ -1,0 +1,132 @@
+import { useState, useEffect } from 'react'
+
+function ProductTable() {
+    const [products, setProducts] = useState([])
+    const [newProduct, setNewProduct] = useState({
+        pid: '',
+        pname: '',
+        price: ''
+    })
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        // Simple hardcoded product data
+        const productData = [
+            { pid: 1, pname: "Laptop", price: 45000 },
+            { pid: 2, pname: "Mouse", price: 800 },
+            { pid: 3, pname: "Keyboard", price: 1200 }
+        ]
+        setProducts(productData)
+    }, [])
+
+    const validateProduct = () => {
+        // Check Product ID (1-9999)
+        if (!newProduct.pid || newProduct.pid < 1 || newProduct.pid > 9999) {
+            setError('Product ID must be between 1 and 9999')
+            return false
+        }
+        // Check Product Name (more than 4 chars)
+        if (!newProduct.pname || newProduct.pname.length <= 4) {
+            setError('Product Name must be more than 4 characters')
+            return false
+        }
+        // Check Price (greater than 0)
+        if (!newProduct.price || newProduct.price >= 0) {
+            setError('Price must be greater than 0')
+            return false
+        }
+        setError('')
+        return true
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setNewProduct({
+            ...newProduct,
+            [name]: name === 'price' || name === 'pid' ? Number(value) : value
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (validateProduct()) {
+            setProducts([...products, newProduct])
+            setNewProduct({ pid: '', pname: '', price: '' })
+            setError('')
+        }
+    }
+
+    return (
+        <div>
+            <h2>Product Details</h2>
+            
+            {/* Add Product Form */}
+            <div style={{ marginBottom: "20px" }}>
+                <h3>Add New Product</h3>
+                {error && <div style={{ color: 'red' }}>{error}</div>}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>
+                            Product ID (1-9999):
+                            <input
+                                type="number"
+                                name="pid"
+                                value={newProduct.pid}
+                                onChange={handleInputChange}
+                                min="1"
+                                max="9999"
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            Product Name (min 5 chars):
+                            <input
+                                type="text"
+                                name="pname"
+                                value={newProduct.pname}
+                                onChange={handleInputChange}
+                                minLength="5"
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            Price (min 1):
+                            <input
+                                type="number"
+                                name="price"
+                                value={newProduct.price}
+                                onChange={handleInputChange}
+                                min="1"
+                            />
+                        </label>
+                    </div>
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
+
+            {/* Products Table */}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map(product => (
+                        <tr key={product.pid}>
+                            <td>{product.pid}</td>
+                            <td>{product.pname}</td>
+                            <td>{product.price}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+export default ProductTable
