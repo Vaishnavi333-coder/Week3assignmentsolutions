@@ -1,0 +1,462 @@
+----About.jsx----
+function About()
+{  
+    return (
+        <>
+            <div style={{backgroundColor:'LightPink', padding: '10px'}}>
+                <h1>About</h1>  
+                <p>This page provides details about our company. This page provides details about our compnay. This page provides details about our compnay. This page provides details about our compnay. </p>
+                <p>This page provides details about our company. This page provides details about our compnay. This page provides details about our compnay. This page provides details about our compnay. </p>
+            </div>  
+    </>
+    );
+}  
+export default About;
+ 
+----Contact.jsx---
+function Contact()
+{    
+    return ( 
+    
+    <div style={{backgroundColor:'LightBlue', padding: '10px'}}>
+        <h1>Contact Page</h1>  
+        <p>This page provides contact details of compnay. This page provides contact details of compnay.This page provides contact details of compnay.This page provides contact details of compnay.This page provides contact details of compnay. </p>
+        <p>This page provides contact details of compnay. This page provides contact details of compnay.This page provides contact details of compnay.This page provides contact details of compnay.This page provides contact details of compnay. </p>
+    </div> 
+    );
+    
+}  
+export default Contact;
+
+ ----Depts.jsx------
+ function Depts()
+ {                     
+      let deptsArray  =   [
+            { Deptno:10,   Dname: "Accounts", Loc : "Hyd" } ,
+            { Deptno:20,   Dname: "Sales", Loc : "Pune" } ,
+            { Deptno:30,   Dname: "Admin", Loc : "Hyd" } ,
+            { Deptno:40,   Dname: "Marketing", Loc : "Mumbai" }
+           ] ;         
+        var result = deptsArray.map( (item, index) => 
+            <tr key={index}>  
+               <td> {item.Deptno}  </td> 
+               <td> {item.Dname}  </td> 
+               <td> {item.Loc}  </td>  
+            </tr>);
+    return ( <>   
+            <h3>All Deptartments</h3>
+            <table   border="2"  cellPadding="5"  cellSpacing="0" width="500">
+                <thead>
+                        <tr>
+                                <th>Deptno</th>
+                                <th>Dname</th>
+                                <th>Location</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    {result}
+                </tbody>
+            </table> 
+    </>
+);
+}
+export default Depts;
+ ----Details.jsx----
+import { Link, useParams } from "react-router-dom";
+function Details()
+{  
+ 
+    const { id }  = useParams();
+ 
+     let empsArray =  [
+             {  empno : 10256, ename:"Scott", job: "Manager", deptno : 10  },
+             {  empno : 10257, ename:"Smith", job: "Lead", deptno : 20  },
+             {  empno : 10258, ename:"Sandy", job: "Programmer", deptno : 30  },
+             {  empno : 10259, ename:"Sam", job: "Tester", deptno : 40  },
+             {  empno : 10256, ename:"Scott", job: "Manager", deptno : 10  },
+             {  empno : 10257, ename:"Smith", job: "Lead", deptno : 20  },
+             {  empno : 10258, ename:"Sandy", job: "Programmer", deptno : 30  },
+             {  empno : 10259, ename:"Sam", job: "Tester", deptno : 40  },
+        ];
+
+    let empObj = empsArray.find(item => item.empno == id);
+    return (     
+            <>
+                 <h3>Selected Employee Details</h3>       
+                 <hr/>
+                    <div>
+                        Employee Number :  {empObj.empno}  <br/>
+                        Employee Name :  {empObj.ename}  <br/>
+                        Employee Job :  {empObj.job}  <br/>
+                        Employee Deptno :  {empObj.deptno}  <br/>  
+                    </div>
+                <hr/>
+            <Link  to="/Emps">Back to Employees</Link> 
+        </> 
+    );
+}  
+
+export default Details;
+ 
+----Emps.jsx-----
+ import { Link } from 'react-router-dom';
+
+export default  function Emps()
+{  
+    let emps =  [
+             {  empno : 10256, ename:"Scott", job: "Manager", deptno : 10  },
+             {  empno : 10257, ename:"Smith", job: "Lead", deptno : 20  },
+             {  empno : 10258, ename:"Sandy", job: "Programmer", deptno : 30  },
+             {  empno : 10259, ename:"Sam", job: "Tester", deptno : 40  },
+             {  empno : 10256, ename:"Scott", job: "Manager", deptno : 10  },
+             {  empno : 10257, ename:"Smith", job: "Lead", deptno : 20  },
+             {  empno : 10258, ename:"Sandy", job: "Programmer", deptno : 30  },
+             {  empno : 10259, ename:"Sam", job: "Tester", deptno : 40  },
+        ];
+        var result = emps.map( (item, index) => 
+            <tr className={ index % 2 == 0?"c2":"c3" } >  
+               <td> {item.empno}  </td> 
+               <td> {item.ename}  </td> 
+               <td> {item.job}  </td> 
+               <td> {item.deptno}  </td> 
+               <td align='center'>
+                   <Link to={"/Details/" + item.empno}>Details</Link>
+               </td>
+            </tr>);
+
+    return (
+        <div>             
+            <h3>All Employee Details</h3>
+            <table  border="2"  cellpadding="5"  cellSpacing="0" width="700">
+                <tr className="c1">
+                    <th>Emp Number</th>
+                    <th>Emp Name</th>
+                    <th>Emp Job</th>
+                    <th>Emp Deptno</th>    
+                    <th></th>                
+                </tr>
+                {result}
+            </table>
+        </div>);
+}
+ 
+-----Navbar.jsx-----
+import { Link } from "react-router-dom";
+function Navbar()
+{  
+    return (
+
+        <>
+            <h3 style={{ textAlign: "center" }}>Developing Single Page Application using React</h3>
+            <hr />
+            <div style={{ textAlign: "center" }}>
+                <Link to="/">Home</Link> |               
+                <Link to="/Emps">Employees</Link> |     
+                <Link to="/Depts">Departments</Link> |     
+                <Link to="/Contact">Contact Us</Link> |     
+                <Link to="/About">About Us</Link> |
+                <Link to="/Products">Products</Link> |
+                <Link to="/Posts">Posts</Link> ||                  
+                <Link to="/Hello">Invalid</Link> |                  
+            </div>
+            <hr />
+            
+    </>
+    );
+}  
+export default Navbar;
+
+ ----NotFound.jsx----
+function  NotFound()
+{
+    return <div align="center">
+      <h3>Requested Page not found</h3>
+      <img src="src\assets\NotFound.PNG" width="90%" height="280" alt="Alternate text" />               
+    </div>;
+};
+ export default NotFound; 
+
+---Posts.jsx---
+import { useEffect, useState } from "react";
+
+function Posts() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then(res => res.json())
+      .then(data => setPosts(data.slice(0, 10))) // Show only 10 posts
+      .catch(err => console.error(err));
+  }, []);
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2 style={{ textAlign: "center" }}>User Posts</h2>
+      {posts.map(post => (
+        <div key={post.id} style={{
+          border: "1px solid #ccc",
+          margin: "10px",
+          padding: "10px",
+          borderRadius: "8px"
+        }}>
+          <h4>{post.title}</h4>
+          <p>{post.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default Posts;
+
+----ProductDetails.jsx---
+import { useParams, Link } from "react-router-dom";
+
+function ProductDetails() {
+  const { id } = useParams();
+
+  const products = [
+    { id: 1, name: "Laptop", price: 65000, description: "High performance laptop" },
+    { id: 2, name: "Mobile", price: 25000, description: "Latest Android smartphone" },
+    { id: 3, name: "Headphones", price: 4000, description: "Noise-cancelling headphones" },
+    { id: 4, name: "Smartwatch", price: 8000, description: "Water-resistant smartwatch" },
+  ];
+
+  const product = products.find(p => p.id === parseInt(id));
+
+  if (!product) return <h3>Product not found</h3>;
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h2>Product Details</h2>
+      <div style={{
+        border: "1px solid gray",
+        display: "inline-block",
+        padding: "20px",
+        borderRadius: "10px"
+      }}>
+        <h3>{product.name}</h3>
+        <p><b>Price:</b> ₹{product.price}</p>
+        <p><b>Description:</b> {product.description}</p>
+        <Link to="/Products">Back to Products</Link>
+      </div>
+    </div>
+  );
+}
+
+export default ProductDetails;
+
+----Products.jsx----
+import { Link } from "react-router-dom";
+
+function Products() {
+  const products = [
+    { id: 1, name: "Laptop", price: 65000, image: "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/13-laptop-platinum-right-render-fy25:VP4-1260x795?fmt=png-alpha" },
+    { id: 2, name: "Mobile", price: 25000, image: "https://image.made-in-china.com/2f0j00qZPiGaTHIVkU/Factory-Supply-S21-Mobile-Phone-Large-Memory-24-48MP-High-Resolution-Cellphone-7-2-Inch-Big-Screen-Dual-SIM-Card-Phone.webp" },
+    { id: 3, name: "Headphones", price: 4000, image: "data:image/jpeg;base64,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" },
+    { id: 4, name: "Smartwatch", price: 8000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfDK7bX7nOQYeXl12ULxh8eJfzkXKpaRlybQ&s" },
+  ];
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h2>Product List</h2>
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        gap: "20px"
+      }}>
+        {products.map(p => (
+          <div key={p.id} style={{
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+            width: "200px",
+            padding: "10px",
+            backgroundColor: "#f9f9f9"
+          }}>
+            <img src={p.image} alt={p.name} width="150" height="150" />
+            <h4>{p.name}</h4>
+            <p>Price: ₹{p.price}</p>
+            <Link to={`/ProductDetails/${p.id}`}>View Details</Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Products;
+
+
+----App.css----
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+---App.jsx---
+function App() {
+  return (
+    <div style={{ textAlign: "center" }} >
+      <h3>Welcome to My Web Application</h3>
+      <img src="src/assets/Banner.jpg" width="90%" height="250" alt="Alternate text" />
+    </div>
+  );
+}
+export default App;
+
+
+----index.css----
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+---Main.jsx----
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import App from './App.jsx'
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import About from './components/About.jsx';
+import Contact from './components/Contact.jsx';
+import Navbar from './components/NavBar.jsx';
+import Depts from './components/Depts.jsx';
+import NotFound from './components/NotFound.jsx';
+import Emps from './components/Emps.jsx';
+import Details from './components/Details.jsx';
+import Products from './components/Products';
+import ProductDetails from './components/ProductDetails';
+import Posts from './components/Posts';
+
+const routing = (
+  <Router>  
+    <Navbar />
+    <Routes>
+      <Route path="/"  element={ <App /> } />
+      <Route path="/Depts"  element={ <Depts /> } />
+      <Route path="/Emps"  element={ <Emps /> } />
+      <Route path="/About"  element={ <About /> } />
+      <Route path="/Contact"  element={ <Contact /> } />
+      <Route path="/Details/:id" element={ <Details /> }  />
+      <Route path="/Products" element={<Products />} />
+      <Route path="/ProductDetails/:id" element={<ProductDetails />} />
+      <Route path="/Posts" element={<Posts />} />
+      <Route path="*"  element={ <NotFound /> } />
+    </Routes>
+  </Router>
+);
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    { routing }
+  </StrictMode>
+);
+ 
+
+ 
+
+ 
